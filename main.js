@@ -1,16 +1,29 @@
 let n
 初始化()
 
-setInterval(() => {
+var timer = setInterval(() => {
    makeLeave(getImage(n))
         .one('transitionend',(e)=>{
             makeEnter($(e.currentTarget))
         })
     makeCurrent(getImage(n+1))
     n += 1
-},3000)
+},2000)
 
-
+$(document).on('visibilitychange',function(e){
+    if(document.hidden){
+        window.clearInterval(timer)
+    }else{
+        timer = setInterval(() => {//再次记下计时器，方便下次使用
+            makeLeave(getImage(n))
+                 .one('transitionend',(e)=>{
+                     makeEnter($(e.currentTarget))
+                 })
+             makeCurrent(getImage(n+1))
+             n += 1
+         },2000) 
+    }
+})
 
 
 
